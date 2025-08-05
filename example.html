@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Rating Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .star-rating {
+            font-size: 24px;
+            color: #ffd700;
+            margin: 10px 0;
+        }
+        
+        .star {
+            display: inline-block;
+            margin-right: 2px;
+        }
+        
+        .star.filled {
+            color: #ffd700;
+        }
+        
+        .star.half {
+            color: #ffd700;
+        }
+        
+        .star.empty {
+            color: #ddd;
+        }
+        
+        .rating-info {
+            margin: 10px 0;
+            color: #666;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        .demo-section {
+            margin: 30px 0;
+        }
+        
+        .code-example {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>⭐ Star Rating Function Demo</h1>
+    
+    <div class="demo-section">
+        <h2>Product Examples</h2>
+        <div id="products-container"></div>
+    </div>
+    
+    <div class="demo-section">
+        <h2>Code Examples</h2>
+        <div class="code-example">
+            <strong>Basic Usage:</strong><br>
+            <code>
+// Add stars to a product<br>
+let product = { name: "Product Name", price: 29.99 };<br>
+product = addStarsToProduct(product, 4.2);<br>
+console.log(product.rating.stars); // ★★★★☆
+            </code>
+        </div>
+        
+        <div class="code-example">
+            <strong>HTML Format:</strong><br>
+            <code>
+// Generate HTML stars<br>
+const htmlStars = generateStarsHTML(3.5);<br>
+document.getElementById('rating').innerHTML = htmlStars;
+            </code>
+        </div>
+    </div>
+
+    <script src="starRating.js"></script>
+    <script>
+        // Example products with different ratings
+        const exampleProducts = [
+            { name: "Wireless Headphones", price: 99.99, rating: 4.5 },
+            { name: "Smart Watch", price: 199.99, rating: 3.8 },
+            { name: "Bluetooth Speaker", price: 49.99, rating: 4.2 },
+            { name: "Phone Case", price: 19.99, rating: 2.5 },
+            { name: "Power Bank", price: 39.99, rating: 5.0 }
+        ];
+
+        // Function to create product cards
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            
+            // Add stars to product
+            const productWithStars = addStarsToProduct({...product}, product.rating, 'html');
+            
+            card.innerHTML = `
+                <h3>${product.name}</h3>
+                <p><strong>Price:</strong> $${product.price}</p>
+                <div class="rating-info">
+                    <strong>Rating:</strong> ${product.rating}/5
+                </div>
+                ${productWithStars.rating.stars}
+                <div style="margin-top: 10px;">
+                    <small>Unicode: ${generateStarsUnicode(product.rating)}</small>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Display all products
+        const container = document.getElementById('products-container');
+        exampleProducts.forEach(product => {
+            container.appendChild(createProductCard(product));
+        });
+
+        // Console demonstration
+        console.log('=== Star Rating Demo ===');
+        exampleProducts.forEach(product => {
+            const productWithStars = addStarsToProduct({...product}, product.rating);
+            console.log(`${product.name}: ${productWithStars.rating.stars} (${product.rating}/5)`);
+        });
+    </script>
+</body>
+</html>
